@@ -34,11 +34,10 @@ public class Personaje{
         Console.WriteLine("Apodo: " + apodo);
         Console.WriteLine("Edad: " + edad);
         Console.WriteLine("Salud: " + salud);
-        Console.WriteLine("Salud: " + velocidad);
-        Console.WriteLine("Salud: " + destreza);
-        Console.WriteLine("Salud: " + fuerza);
-        Console.WriteLine("Salud: " + armadura);
-
-
+        Console.WriteLine("Nivel: " + nivel);
+        Console.WriteLine("Fuerza: " + fuerza);
+        Console.WriteLine("Velocidad: " + velocidad);
+        Console.WriteLine("Destreza: " + destreza);
+        Console.WriteLine("Armadura: " + armadura);
     }
 }
