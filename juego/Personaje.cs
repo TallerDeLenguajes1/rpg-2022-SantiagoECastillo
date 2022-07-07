@@ -1,4 +1,5 @@
 public class Personaje{
+    private String tipo;
     private String nombre;
     private String apodo;
     private DateTime fechaNacimiento;
@@ -17,10 +18,20 @@ public class Personaje{
     public int Nivel { get => nivel; set => nivel = value; }
     public double Armadura { get => armadura; set => armadura = value; }
 
+
+
+    private string[] Nombres = {"Artoria", "Emiya", "Gilgamesh", "Medusa", "Angra", "Astolof", "Cú", "Gilles", "Jack", "Alejandro", "Spartacus"};
+
+    //string[] Apodos = {""}
+    
+    private string[] Tipos = {"Saber", "Archer", "Lacer", "Caster", "Assasin", "Berserk", "Rider"};
+
+    //El constructor vacio es el que genera toda la informacion del personaje
     public Personaje(){
-        nombre = "";//para evitar la advertencia a null
-        apodo = "";
         Random rand = new Random();
+        tipo = Tipos[rand.Next(0, Tipos.Count())];
+        nombre =  Nombres[rand.Next(0, Nombres.Count())];
+        apodo = "";
         edad = rand.Next(20,301);
         Salud = 100;
         Velocidad = rand.Next(1, 11);
@@ -37,6 +48,7 @@ public class Personaje{
 
     public void getInformacionPersonaje(){
         Console.WriteLine("--------INFORMACION-------");
+        Console.WriteLine("Tipo: " + tipo);
         Console.WriteLine("Nombre: " + nombre);
         Console.WriteLine("Apodo: " + apodo);
         Console.WriteLine("Edad: " + edad);
