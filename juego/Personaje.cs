@@ -10,17 +10,24 @@ public class Personaje{
     private int nivel;
     private double armadura;
 
+    public double Salud { get => salud; set => salud = value; }
+    public double Velocidad { get => velocidad; set => velocidad = value; }
+    public double Destreza { get => destreza; set => destreza = value; }
+    public double Fuerza { get => fuerza; set => fuerza = value; }
+    public int Nivel { get => nivel; set => nivel = value; }
+    public double Armadura { get => armadura; set => armadura = value; }
+
     public Personaje(){
         nombre = "";//para evitar la advertencia a null
         apodo = "";
         Random rand = new Random();
         edad = rand.Next(20,301);
-        salud = 100;
-        velocidad = rand.Next(1, 11);
-        destreza = rand.Next(1, 6);
-        fuerza = rand.Next(1, 11);
-        armadura = rand.Next(1, 11);
-        nivel = rand.Next(1,11);
+        Salud = 100;
+        Velocidad = rand.Next(1, 11);
+        Destreza = rand.Next(1, 6);
+        Fuerza = rand.Next(1, 11);
+        Armadura = rand.Next(1, 11);
+        Nivel = rand.Next(1,11);
     }
 
     public void setPersonaje(String nombre, String apodo){
@@ -33,11 +40,11 @@ public class Personaje{
         Console.WriteLine("Nombre: " + nombre);
         Console.WriteLine("Apodo: " + apodo);
         Console.WriteLine("Edad: " + edad);
-        Console.WriteLine("Salud: " + salud);
-        Console.WriteLine("Nivel: " + nivel);
-        Console.WriteLine("Fuerza: " + fuerza);
-        Console.WriteLine("Velocidad: " + velocidad);
-        Console.WriteLine("Destreza: " + destreza);
-        Console.WriteLine("Armadura: " + armadura);
+        Console.WriteLine("Salud: " + Salud);
+        Console.WriteLine("Nivel: " + Nivel);
+        Console.WriteLine("Fuerza: " + Fuerza);
+        Console.WriteLine("Velocidad: " + Velocidad);
+        Console.WriteLine("Destreza: " + Destreza);
+        Console.WriteLine("Armadura: " + Armadura);
     }
 }
