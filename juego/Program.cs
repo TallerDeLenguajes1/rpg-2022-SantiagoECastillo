@@ -64,6 +64,8 @@ void juego(){
     
     combate(pj1, pj2); 
 
+    Console.WriteLine("\n\nSalud resultadonte " + pj1.Salud);
+
 }
 
 // REVISAR, NO FUNCIONA
@@ -105,7 +107,7 @@ void combate(Personaje pj1, Personaje pj2){
     while(turnos < 3){
         Console.WriteLine("Turno: " + (turnos+1));
 
-        if(pj1.Salud > 0){
+        if(pj1.Salud > 0){ //Controla que el personaje este vivo para poder atacar
             
             Console.WriteLine("--ATACA PJ1--");
             poderDeDisparos = (pj1.Destreza * pj1.Fuerza * pj1.Nivel); 
@@ -118,10 +120,6 @@ void combate(Personaje pj1, Personaje pj2){
             Console.WriteLine("Daño provocado :" + dañoProvocado);
             Console.WriteLine("Salud de pj2 :" + pj2.Salud);
 
-        }else{
-            Console.WriteLine(pj1.Nombre + " Murio a manos de " + pj2.Nombre);
-            Console.WriteLine("GAME OVER");    
-            turnos = 3;
         }
 
         if(pj2.Salud > 0){
@@ -136,15 +134,24 @@ void combate(Personaje pj1, Personaje pj2){
 
             Console.WriteLine("Daño provocado :" + dañoProvocado);
             Console.WriteLine("Salud de pj1 :" + pj1.Salud);
-        
-        }else{
-            Console.WriteLine(pj2.Nombre + " Murio a manos de " + pj1.Nombre);
-            Console.WriteLine("FELICIDADES, pasas a la siguiente ronda");
-            turnos = 3;
         }
 
-        turnos++;
-        Console.ReadKey();
+        //Control de salud de personajes
+        if(pj1.Salud > 0 && pj2.Salud > 0){
+            turnos++;
+            Console.ReadKey();        
+        }else{
+            if(pj1.Salud < 0){
+                Console.WriteLine(pj1.Nombre + " Murio a manos de " + pj2.Nombre);
+                Console.WriteLine("GAME OVER");    
+                turnos = 3;
+            }else{
+                Console.WriteLine(pj2.Nombre + " Murio a manos de " + pj1.Nombre);
+                Console.WriteLine("FELICIDADES, pasas a la siguiente ronda");
+                turnos = 3;
+            }
+        }
+
     }
     
     //CASO AMBOS VIVOS
