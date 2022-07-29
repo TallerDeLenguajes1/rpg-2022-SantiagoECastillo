@@ -28,7 +28,7 @@ Console.WriteLine("Usted salio del juego");
 
 
 void juego(){
-    /*
+    
     List<Personaje> ListaDeCombatientes = new List<Personaje>();
     
     Console.WriteLine("----SELECCION DE PERSONAJE----");
@@ -58,13 +58,18 @@ void juego(){
     Personaje pjSeleccionado = new Personaje();
     pjSeleccionado = ListaDeCombatientes[opcionSeleccionada-1];
     ListaDeCombatientes.RemoveAt(opcionSeleccionada-1); //se elimina el personaje de la lista para no pelear con el mismo
-    */
-    Personaje pj1 = new Personaje();
-    Personaje pj2 = new Personaje();
-    
-    combate(pj1, pj2); 
 
-    Console.WriteLine("\n\nSalud resultadonte " + pj1.Salud);
+    int cantidadCombates =0;
+    while(cantidadCombates < ListaDeCombatientes.Count()){
+        Console.WriteLine("----------RONDA {0}--------", cantidadCombates+1);
+        Console.WriteLine("----COMIENZA EL COMBATE----");
+        combate(pjSeleccionado, ListaDeCombatientes[cantidadCombates]);
+        if(pjSeleccionado.Salud > 0){
+            cantidadCombates++;
+        }else{
+            cantidadCombates = ListaDeCombatientes.Count() + 1;
+        }
+    }
 
 }
 
@@ -81,35 +86,13 @@ void combate(Personaje pj1, Personaje pj2){
     
     Console.WriteLine("----COMIENZA EL COMBATE----");
     Random rand = new Random();
-    /*//PRUEBA
-        Console.WriteLine("--ATACA PJ1--");
-        double poderDeDisparos = (pj1.Destreza * pj1.Fuerza * pj1.Nivel); //
-        Console.WriteLine("PDD: " + poderDeDisparos);
-
-        double efectividadDeDisparo = rand.Next(1, 101);
-        Console.WriteLine("EDD: " + efectividadDeDisparo);
-
-        double valorDeAtaque = (poderDeDisparos * efectividadDeDisparo); 
-        Console.WriteLine("VA: " + valorDeAtaque);
-        
-        double poderDeDefenza = (pj2.Armadura * pj2.Velocidad);
-        Console.WriteLine("PD: " + poderDeDefenza);
-        
-        double dañoProvocado = (((valorDeAtaque * efectividadDeDisparo) - poderDeDefenza) / maximoDañoProvocable) * 100;
-        Console.WriteLine("DP: " + dañoProvocado);
-        
-        pj2.Salud =(int)(pj2.Salud - dañoProvocado);
-        Console.WriteLine("SALUD: " + pj2.Salud);
-
-    */
-
         
     while(turnos < 3){
         Console.WriteLine("Turno: " + (turnos+1));
 
         if(pj1.Salud > 0){ //Controla que el personaje este vivo para poder atacar
             
-            Console.WriteLine("--ATACA PJ1--");
+            Console.WriteLine("---ATACAS---");
             poderDeDisparos = (pj1.Destreza * pj1.Fuerza * pj1.Nivel); 
             efectividadDeDisparo = rand.Next(1, 101);
             valorDeAtaque = (poderDeDisparos * efectividadDeDisparo); //quite el /100 para evitar numero negativos
@@ -117,14 +100,17 @@ void combate(Personaje pj1, Personaje pj2){
             dañoProvocado = (((valorDeAtaque * efectividadDeDisparo) - poderDeDefenza) / maximoDañoProvocable) * 100;
             pj2.Salud = pj2.Salud - dañoProvocado;
 
+            Console.WriteLine(pj1.Nombre + "realiza su ataque");
             Console.WriteLine("Daño provocado :" + dañoProvocado);
-            Console.WriteLine("Salud de pj2 :" + pj2.Salud);
+            Console.WriteLine("Salud de {0} : {1}", pj2.Nombre, pj2.Salud);
 
         }
-
+        
+        Console.ReadKey();
+        
         if(pj2.Salud > 0){
 
-            Console.WriteLine("--ATACA PJ2--");
+            Console.WriteLine("---DEFIENDES---");
             poderDeDisparos = (pj2.Destreza * pj2.Fuerza * pj2.Nivel);
             efectividadDeDisparo = rand.Next(1, 101);
             valorDeAtaque = (poderDeDisparos * efectividadDeDisparo);
@@ -132,8 +118,10 @@ void combate(Personaje pj1, Personaje pj2){
             dañoProvocado = (((valorDeAtaque * efectividadDeDisparo) - poderDeDefenza) / maximoDañoProvocable) * 100;
             pj1.Salud = pj1.Salud - dañoProvocado;
 
+            Console.WriteLine(pj2.Nombre + "realiza su ataque");
             Console.WriteLine("Daño provocado :" + dañoProvocado);
-            Console.WriteLine("Salud de pj1 :" + pj1.Salud);
+            Console.WriteLine("Salud de {0} : {1}", pj1.Nombre, pj1.Salud);
+
         }
 
         //Control de salud de personajes
