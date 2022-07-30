@@ -45,7 +45,7 @@ void juego(){
         ListaDeCombatientes.Add(pj);
     }    
     
-    Console.WriteLine("Desea usar el luchador numero: ");
+    Console.WriteLine("\nDesea usar el luchador numero: ");
     int opcionSeleccionada = Convert.ToInt32(Console.ReadLine());
     while(opcionSeleccionada<0 || opcionSeleccionada>3){
         Console.WriteLine("Ingrese una opcion valida");
@@ -59,6 +59,9 @@ void juego(){
     pjSeleccionado = ListaDeCombatientes[opcionSeleccionada-1];
     ListaDeCombatientes.RemoveAt(opcionSeleccionada-1); //se elimina el personaje de la lista para no pelear con el mismo
 
+    Personaje copiaPersonajeSeleccionado = new Personaje();
+    copiaPersonajeSeleccionado = pjSeleccionado;
+
     int cantidadCombates =0;
     while(cantidadCombates < ListaDeCombatientes.Count()){
         Console.WriteLine("----------RONDA {0}--------", cantidadCombates+1);
@@ -71,9 +74,18 @@ void juego(){
         }
     }
 
+
+    Console.WriteLine("Desea guardar su historial de combates? (s/n): ");
+    string respuesta = Console.ReadLine();
+    if(respuesta == "s"){
+        HelperArchivos.guardarHistorial(pjSeleccionado, )
+        
+    }else{
+        Console.WriteLine("No se guardo el historial");
+    }
 }
 
-// REVISAR, NO FUNCIONA
+ 
 void combate(Personaje pj1, Personaje pj2){
     int turnos = 0;
     //defino aqui las variables para no redefinirla en el while
@@ -84,7 +96,6 @@ void combate(Personaje pj1, Personaje pj2){
     double dañoProvocado;
     double maximoDañoProvocable = 50000;
     
-    Console.WriteLine("----COMIENZA EL COMBATE----");
     Random rand = new Random();
         
     while(turnos < 3){
@@ -98,12 +109,15 @@ void combate(Personaje pj1, Personaje pj2){
             valorDeAtaque = (poderDeDisparos * efectividadDeDisparo); //quite el /100 para evitar numero negativos
             poderDeDefenza = (pj2.Armadura * pj2.Velocidad);
             dañoProvocado = (((valorDeAtaque * efectividadDeDisparo) - poderDeDefenza) / maximoDañoProvocable) * 100;
-            pj2.Salud = pj2.Salud - dañoProvocado;
-
-            Console.WriteLine(pj1.Nombre + "realiza su ataque");
-            Console.WriteLine("Daño provocado :" + dañoProvocado);
-            Console.WriteLine("Salud de {0} : {1}", pj2.Nombre, pj2.Salud);
-
+            
+            Console.WriteLine(pj1.Nombre + " realiza su ataque");
+            if(dañoProvocado > 120.0){
+                Console.WriteLine("Pero FALLA en el intento");
+            }else{
+                pj2.Salud = pj2.Salud - dañoProvocado;
+                Console.WriteLine("Daño provocado :" + dañoProvocado);
+                Console.WriteLine("Salud de {0} : {1}", pj2.Nombre, pj2.Salud);
+            }
         }
         
         Console.ReadKey();
@@ -116,12 +130,15 @@ void combate(Personaje pj1, Personaje pj2){
             valorDeAtaque = (poderDeDisparos * efectividadDeDisparo);
             poderDeDefenza = (pj1.Armadura * pj1.Destreza);
             dañoProvocado = (((valorDeAtaque * efectividadDeDisparo) - poderDeDefenza) / maximoDañoProvocable) * 100;
-            pj1.Salud = pj1.Salud - dañoProvocado;
-
-            Console.WriteLine(pj2.Nombre + "realiza su ataque");
-            Console.WriteLine("Daño provocado :" + dañoProvocado);
-            Console.WriteLine("Salud de {0} : {1}", pj1.Nombre, pj1.Salud);
-
+            
+            Console.WriteLine(pj2.Nombre + " realiza su ataque");
+            if(dañoProvocado > 200.0){
+                Console.WriteLine("Pero FALLA en el intento");
+            }else{
+                pj1.Salud = pj1.Salud - dañoProvocado;
+                Console.WriteLine("Daño provocado :" + dañoProvocado);
+                Console.WriteLine("Salud de {0} : {1}", pj1.Nombre, pj1.Salud);
+            }
         }
 
         //Control de salud de personajes
@@ -144,6 +161,7 @@ void combate(Personaje pj1, Personaje pj2){
     
     //CASO AMBOS VIVOS
     if(pj1.Salud > 0 && pj2.Salud > 0){
+        Console.WriteLine("\nFin de este encuentro");
         Console.WriteLine("Ambos combatientes quedaron con vida");
         Console.WriteLine("Veamos quien recibivio menos daño");
         Console.WriteLine("Y el ganador del combate es.......");
@@ -153,6 +171,7 @@ void combate(Personaje pj1, Personaje pj2){
             Console.WriteLine("FELICIDADES, pasas a la siguiente ronda");
         }else{
             Console.WriteLine(pj2.Nombre);
+            pj1.Salud = 0;
             Console.WriteLine("GAME OVER");    
         }
     }
