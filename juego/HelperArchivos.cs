@@ -12,7 +12,7 @@ public class HelperArchivos{
         }else{
             
             using(StreamWriter SW = new StreamWriter(rutaDeHistorial, true)){
-                string historiaDeCombates = pjSelecciando.Nombre + pjSelecciando.Salud + Convert.ToString(cantidadDeBatallas) + DateTime.Now.ToShortDateString();
+                string historiaDeCombates = pjSelecciando.Nombre + ";" + pjSelecciando.Salud + ";" + Convert.ToString(cantidadDeBatallas) + ";" + DateTime.Now.ToShortDateString();
                 SW.WriteLine(historiaDeCombates);
                 SW.Close();            
             }
@@ -36,12 +36,24 @@ public class HelperArchivos{
                 while(linea != null){
                     var informacion = linea.Split(";");
 
-                    Console.WriteLine(informacion[0] + " - " + informacion[1] + " - " + informacion[2] + " -  {0}", informacion[3]);
+                    Console.WriteLine(informacion[0] + " - Salud: " + informacion[1] + " - Cantidad de combates: " + informacion[2] + " -  Fecha del combate: {0}", informacion[3]);
                     Console.WriteLine("-----------------------------------");
+
+                    linea = SR.ReadLine();
                 } 
                 SR.Close();
             }
         }
     }  
 
+    /*
+    public static void guardarPersonaje(Personaje pjSeleccionado){
+        string rutaDeGuardado = @"C:\Users\santiago\Desktop\Facultad\Taller_de_lenguaje_1\JuegoDeRol\rpg-2022-SantiagoECastillo\juego\JsonGuardadoPersoonajes\personajesGuardados.json";
+
+
+    }
+    */
 }
+
+
+ 
