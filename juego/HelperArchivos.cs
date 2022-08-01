@@ -66,7 +66,7 @@ public class HelperArchivos{
         }
     }
 
-    public static List<Personaje> leerGuardados(string nombreDelArchivo){
+    public List<Personaje> leerGuardados(string nombreDelArchivo){
         
         var listadoPersonajesGuardados = new List<Personaje>();
 

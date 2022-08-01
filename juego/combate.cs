@@ -144,7 +144,7 @@ public class combate{
     public static void guardarHistorial(Personaje pjSeleccionado, int cantidadDeCombates){
         
         Console.WriteLine("Desea guardar su historial de combates? (s/n): ");
-        string respuesta =Console.ReadLine();
+        string? respuesta =Console.ReadLine();
         
         if(respuesta == "s"){
             guardarHistorial(pjSeleccionado, cantidadDeCombates);
@@ -158,15 +158,41 @@ public class combate{
         string archivoJson = "PersonajesGuardados.json";
         var manejadoArchivo = new HelperArchivos();
 
-        Console.WriteLine("Desea guardar su personaje? (s/n): ");
-        string respuesta =Console.ReadLine();
+        var listaDePersonajesGuardados = new List<Personaje>();
+        listaDePersonajesGuardados = manejadoArchivo.leerGuardados(archivoJson);
         
-        if(respuesta == "s"){
-            manejadoArchivo.guardarPersonaje(archivoJson, personajeAGuardar);
-            Console.WriteLine("Se guardo en el  Personaje");
-        }else{
-            Console.WriteLine("No se guardo el Personaje");
+        //Se controla que el personaje usado no sea una que ya esta guardado, si no lo esta se pregunta si se lo quiere guardar
+        if(!listaDePersonajesGuardados.Contains(personajeAGuardar)){
+            Console.WriteLine("Desea guardar su personaje? (s/n): ");
+            string? respuesta = Console.ReadLine(); 
+            
+            if(respuesta == "s"){
+                manejadoArchivo.guardarPersonaje(archivoJson, personajeAGuardar);
+                Console.WriteLine("Se guardo en el  Personaje");
+            }else{
+                Console.WriteLine("No se guardo el Personaje");
+            }
         }
     }
+    
 
+    public static Personaje seleccionPersonajeGuardado(){
+        string archivoJson = "PersonajesGuardados.json";
+        var manejadoArchivo = new HelperArchivos();
+        var listaDePersonajesGuardados = new List<Personaje>();
+        Personaje pjSeleccionado = new Personaje();
+
+        listaDePersonajesGuardados = manejadoArchivo.leerGuardados(archivoJson);
+
+        for(int i=0; i<listaDePersonajesGuardados.Count(); i++){
+            Console.WriteLine("--Personaje N{0}--", i+1);
+            listaDePersonajesGuardados[i].obtenerInformacionPersonaje();
+        }
+
+        Console.WriteLine("\nPersonaje a usar: ");
+        int opcion = Convert.ToInt32(Console.ReadLine());
+        pjSeleccionado = listaDePersonajesGuardados[opcion-1];
+
+        return pjSeleccionado;
+    }
 }

@@ -1,5 +1,5 @@
 ﻿
-string salir = "n";
+string? salir = "n";
 int opcion;
 
 do{
@@ -31,13 +31,27 @@ Console.WriteLine("Usted salio del juego");
 
 
 static void juego(){
+    
     List<Personaje> ListaDeCombatientes = new List<Personaje>();
 
     ListaDeCombatientes = combate.generarCombatientes();
 
-    Personaje pjSeleccionado = combate.seleccionDePersonaje(ListaDeCombatientes);
+    Console.WriteLine("Desea usar un personaje guardado? (s/n) ");
+    string? respuesta = Console.ReadLine();
 
-    combate.comenzarCombate(ListaDeCombatientes, pjSeleccionado);
+    if(respuesta == "s"){
+        Personaje pjSeleccionado = combate.seleccionPersonajeGuardado();
+
+        ListaDeCombatientes.RemoveAt(10); //se elimina un personaje para tener batalla contra 10 personajes
+
+        combate.comenzarCombate(ListaDeCombatientes, pjSeleccionado);
+    }else{
+        
+        Personaje pjSeleccionado = combate.seleccionDePersonaje(ListaDeCombatientes);
+
+        combate.comenzarCombate(ListaDeCombatientes, pjSeleccionado);
+
+    }
 
     return;
 }
