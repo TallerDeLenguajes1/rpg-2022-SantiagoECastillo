@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
+
 using System.Text.Json;
 
 
@@ -14,7 +12,7 @@ public class HelperArchivos{
         }else{
             
             using(StreamWriter SW = new StreamWriter(rutaDeHistorial, true)){
-                string historiaDeCombates = pjSelecciando.Nombre + ";" + pjSelecciando.Salud + ";" + Convert.ToString(cantidadDeBatallas) + ";" + DateTime.Now.ToShortDateString();
+                string historiaDeCombates = pjSelecciando.Nombre + ";" + pjSelecciando.Apodo + ";" + pjSelecciando.Salud + ";" + Convert.ToString(cantidadDeBatallas) + ";" + DateTime.Now.ToShortDateString();
                 SW.WriteLine(historiaDeCombates);
                 SW.Close();            
             }
@@ -38,7 +36,7 @@ public class HelperArchivos{
                 while(linea != null){
                     var informacion = linea.Split(";");
 
-                    Console.WriteLine(informacion[0] + " - Salud: " + informacion[1] + " - Cantidad de combates: " + informacion[2] + " -  Fecha del combate: {0}", informacion[3]);
+                    Console.WriteLine(informacion[0] + " - " + informacion[1] + " - Salud: " + informacion[2] + " - Cantidad de combates: " + informacion[3] + " -  Fecha del combate: {0}", informacion[4]);
                     Console.WriteLine("-----------------------------------");
 
                     linea = SR.ReadLine();

@@ -22,7 +22,7 @@ public class Personaje{
 
     private string[] Nombres = {"Artoria", "Emiya", "Gilgamesh", "Medusa", "Angra", "Astolof", "Cú", "Gilles", "Jack", "Alejandro", "Spartacus"};
 
-    //string[] Apodos = {""}
+    private string[] Apodos = {"Dark-nigth", "The-hunter", "Asesino-de-noobs", "Supreme", "mata-suegras"};
     
     private string[] Tipos = {"Saber", "Archer", "Lacer", "Caster", "Assasin", "Berserk", "Rider"};
 
@@ -31,7 +31,7 @@ public class Personaje{
         Random rand = new Random();
         tipo = Tipos[rand.Next(0, Tipos.Count())];
         Nombre =  Nombres[rand.Next(0, Nombres.Count())];
-        Apodo = "";
+        Apodo = Apodos[rand.Next(0, Apodos.Count())];;
         edad = rand.Next(20,301);
         Salud = 100;
         Velocidad = rand.Next(1, 11);

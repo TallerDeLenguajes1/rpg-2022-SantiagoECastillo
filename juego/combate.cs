@@ -45,6 +45,7 @@ public class combate{
         int cantidadCombates = 0;
         while(cantidadCombates < ListaDeCombatientes.Count()){
             Console.WriteLine("\n----------RONDA {0}--------", cantidadCombates+1);
+            Console.WriteLine("------{0} {1} VS {2} {3}------", pjSeleccionado.Nombre, pjSeleccionado.Apodo, ListaDeCombatientes[cantidadCombates].Nombre, pjSeleccionado.Apodo, ListaDeCombatientes[cantidadCombates].Apodo );
             Console.WriteLine("----COMIENZA EL COMBATE----");
             
             int turno = 0;
@@ -104,12 +105,12 @@ public class combate{
         
         }else{
             if(pjSeleccionado.Salud > 0){
-                Console.WriteLine(enemigo.Nombre + " A muerto a manos de " + pjSeleccionado.Nombre);    
+                Console.WriteLine(enemigo.Nombre + " " + enemigo.Apodo + " A muerto a manos de " + pjSeleccionado.Nombre + " " + pjSeleccionado.Apodo);    
                 Console.WriteLine("Felicidades, pasas a la siguiente ronda");
                 Console.ReadKey();
                 return true;
             }else{
-                Console.WriteLine(pjSeleccionado.Nombre + " A muerto a manos de " + enemigo.Nombre);
+                Console.WriteLine(pjSeleccionado.Nombre + " " + pjSeleccionado.Apodo + " A muerto a manos de " + enemigo.Nombre + " " + enemigo.Apodo);
                 Console.WriteLine("Has muerto, fin del juego");
                 Console.ReadKey();
                 return false;
@@ -144,7 +145,7 @@ public class combate{
     public static void guardarHistorial(Personaje pjSeleccionado, int cantidadDeCombates){
         
         Console.WriteLine("Desea guardar su historial de combates? (s/n): ");
-        string? respuesta =Console.ReadLine();
+        string respuesta = Console.ReadLine();
         
         if(respuesta == "s"){
             guardarHistorial(pjSeleccionado, cantidadDeCombates);
@@ -157,12 +158,13 @@ public class combate{
     public static void guardadoPersonaje(Personaje personajeAGuardar){
         string archivoJson = "PersonajesGuardados.json";
         var manejadoArchivo = new HelperArchivos();
-
-        var listaDePersonajesGuardados = new List<Personaje>();
-        listaDePersonajesGuardados = manejadoArchivo.leerGuardados(archivoJson);
+        
+        //NO ME FUNCIONA
+        //List<Personaje> listaDePersonajesGuardados2 = new List<Personaje>();
+        //listaDePersonajesGuardados2 = manejadoArchivo.leerGuardados(archivoJson);
         
         //Se controla que el personaje usado no sea una que ya esta guardado, si no lo esta se pregunta si se lo quiere guardar
-        if(!listaDePersonajesGuardados.Contains(personajeAGuardar)){
+        //if(!(listaDePersonajesGuardados2.Contains(personajeAGuardar))){
             Console.WriteLine("Desea guardar su personaje? (s/n): ");
             string? respuesta = Console.ReadLine(); 
             
@@ -172,7 +174,7 @@ public class combate{
             }else{
                 Console.WriteLine("No se guardo el Personaje");
             }
-        }
+        //}
     }
     
 
