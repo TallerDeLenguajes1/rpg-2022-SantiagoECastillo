@@ -1,4 +1,5 @@
 public class combate{
+ 
     //Creacion de los personajes a combatir
     public static List<Personaje> generarCombatientes(){
         List<Personaje> ListaDeCombatientes = new List<Personaje>();
@@ -37,7 +38,10 @@ public class combate{
     }
 
     public static void comenzarCombate(List<Personaje> ListaDeCombatientes, Personaje pjSeleccionado){
-            
+
+        //Se realiza la copia del personaje inicial para su guardado
+        Personaje copiaPersonaje = (Personaje)pjSeleccionado.copia();
+
         int cantidadCombates = 0;
         while(cantidadCombates < ListaDeCombatientes.Count()){
             Console.WriteLine("\n----------RONDA {0}--------", cantidadCombates+1);
@@ -69,6 +73,7 @@ public class combate{
             }else{
                 //Si el personaje murio, se procede a preguntar si quiere guardar el historial
                 guardarHistorial(pjSeleccionado, cantidadCombates);
+                guardadoPersonaje(copiaPersonaje);
                 cantidadCombates = ListaDeCombatientes.Count();
             }
         }
@@ -76,6 +81,7 @@ public class combate{
         //En caso de ganar todos los combates
         if(pjSeleccionado.Salud > 0){
             guardarHistorial(pjSeleccionado, cantidadCombates);
+            guardadoPersonaje(copiaPersonaje);
         }
     }
 
@@ -141,11 +147,26 @@ public class combate{
         string respuesta =Console.ReadLine();
         
         if(respuesta == "s"){
-            HelperArchivos.guardarHistorial(pjSeleccionado, cantidadDeCombates);
+            guardarHistorial(pjSeleccionado, cantidadDeCombates);
             Console.WriteLine("Se guardo en el  historial");
         }else{
             Console.WriteLine("No se guardo el historial");
         }       
+    }
+
+    public static void guardadoPersonaje(Personaje personajeAGuardar){
+        string archivoJson = "PersonajesGuardados.json";
+        var manejadoArchivo = new HelperArchivos();
+
+        Console.WriteLine("Desea guardar su personaje? (s/n): ");
+        string respuesta =Console.ReadLine();
+        
+        if(respuesta == "s"){
+            manejadoArchivo.guardarPersonaje(archivoJson, personajeAGuardar);
+            Console.WriteLine("Se guardo en el  Personaje");
+        }else{
+            Console.WriteLine("No se guardo el Personaje");
+        }
     }
 
 }

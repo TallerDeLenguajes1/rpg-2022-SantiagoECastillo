@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
+
 
 public class HelperArchivos{
     public static void guardarHistorial(Personaje pjSelecciando, int cantidadDeBatallas){
@@ -46,13 +48,44 @@ public class HelperArchivos{
         }
     }  
 
-    /*
-    public static void guardarPersonaje(Personaje pjSeleccionado){
-        string rutaDeGuardado = @"C:\Users\santiago\Desktop\Facultad\Taller_de_lenguaje_1\JuegoDeRol\rpg-2022-SantiagoECastillo\juego\JsonGuardadoPersoonajes\personajesGuardados.json";
+    
+    public void guardarPersonaje(string nombreDelArchivo, Personaje personajeAGuardar){
+
+        var listaParaGuardarJugador = new List<Personaje>();
+        listaParaGuardarJugador.Add(personajeAGuardar);
+
+        string informacionAGuardar = JsonSerializer.Serialize(listaParaGuardarJugador);
 
 
+        using(var archivo = new FileStream(nombreDelArchivo, FileMode.Append)){
+            
+            using(var strWriter = new StreamWriter(archivo)){
+                strWriter.WriteLine("{0}", informacionAGuardar);
+                strWriter.Close();
+            }
+        }
     }
-    */
+
+    public static List<Personaje> leerGuardados(string nombreDelArchivo){
+        
+        var listadoPersonajesGuardados = new List<Personaje>();
+
+        string documento;
+        
+        using(var abrirArchivo = new FileStream(nombreDelArchivo, FileMode.Open)){
+            
+            using(var strReader = new StreamReader(abrirArchivo)){
+                documento = strReader.ReadToEnd();
+                abrirArchivo.Close();
+            }
+
+        }
+
+        listadoPersonajesGuardados = JsonSerializer.Deserialize<List<Personaje>>(documento); 
+
+        return listadoPersonajesGuardados;
+    }
+
 }
 
 

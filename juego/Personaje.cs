@@ -59,4 +59,9 @@ public class Personaje{
         Console.WriteLine("Destreza: " + Destreza);
         Console.WriteLine("Armadura: " + Armadura);
     }
+
+
+    public object copia(){
+        return MemberwiseClone();
+    }
 }
